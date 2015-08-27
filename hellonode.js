@@ -133,39 +133,39 @@
 // 	// response.on('error', console.log);
 // });
 
+
+// 9. JUGGLING ASYNC
+
 var http = require('http');
-var urls = process.argv.slice(3, process.argv.length);
+var urls = process.argv.slice(2, process.argv.length);
 var output = [];
-var isBusy = false;
+var isBusy = 0;
 
 var done = function() {
-	if (isBusy === false) {
+	if (!isBusy) {
 		output.map(function(content) {
 			console.log(content);
 		})
 	}
 }
 
-urls.map(function(url, index) {
-	http.get(url, function(response) {
-		isBusy = true;
+urls.map(function(url, idx) {
+	http.get(url, function(res) {
+		isBusy++;
 		var dataString = '';
-		response.setEncoding('utf8');
+		res.setEncoding('utf8');
 
-		response.on('data', function(data) {
+		res.on('data', function(data) {
 			dataString += data;
 		});
 
-		response.on('end', function() {
-			output[index] = dataString;
-			isBusy = false;
+		res.on('end', function() {
+			output[idx] = dataString;
+			isBusy--;
 			done();
-			// response.on('error', console.log);
+			// res.on('error', console.log);
 		});
 	});
 });
-
-
-
 
 
