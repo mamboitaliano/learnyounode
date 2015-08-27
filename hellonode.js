@@ -134,34 +134,38 @@
 // });
 
 var http = require('http');
-var urls = 
+var urls = process.argv.slice(3, process.argv.length);
+var output = [];
+var isBusy = false;
 
-function getLoop(args) {
-	// console.log("hitting method");
-	// console.log(args.length);
-
-	for (var i = 2; i < args.length ; i++) {
-		http.get(args[i], function(response) {
-			var result = "";
-
-			function appendResult(data) {
-				result += data; 
-			}
-
-			function logResult() {
-				// console.log(result.length);
-				console.log(result);
-			}
-
-			response.setEncoding('utf8');
-			response.on('data', appendResult);
-			response.on('end', logResult);
-			// response.on('error', console.log);
-		});
+var done = function() {
+	if (isBusy === false) {
+		output.map(function(content) {
+			console.log(content);
+		})
 	}
 }
 
-getLoop(process.argv);
+urls.map(function(url, index) {
+	http.get(url, function(response) {
+		isBusy = true;
+		var dataString = '';
+		response.setEncoding('utf8');
+
+		response.on('data', function(data) {
+			dataString += data;
+		});
+
+		response.on('end', function() {
+			output[index] = dataString;
+			isBusy = false;
+			done();
+			// response.on('error', console.log);
+		});
+	});
+});
+
+
 
 
 
