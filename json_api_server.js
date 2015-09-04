@@ -18,27 +18,24 @@ var routes = {
 	}
 }
 
-// console.log(routes["/api/unixtime"]);
-
-
 var server = http.createServer(function (req, res) {
 	if (req.method === "GET") {
 		var parseRequest = url.parse(req.url, true);
 		var query = parseRequest.query;
 		var path = parseRequest.pathname;
-
-		// console.log
-		// console.log(routes["/api/parsetime"]);
+		var time = '';
 		
 		if (path == "/api/parsetime") {
-			console.log(routes["/api/parsetime"]);
+			time = routes["/api/parsetime"];
 		}
 		else if (path == "/api/unixtime") {
-			console.log(routes["/api/unixtime"]);
+			time = routes["/api/unixtime"];
 		}
 
+		// console.log(time);
+
 		res.writeHead(200, { 'Content-Type' : 'application/json' })
-		res.end();
+		res.end(JSON.stringify(time));
 	}
 	else {
 		console.log('no GET data received\n');
