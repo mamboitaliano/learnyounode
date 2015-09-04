@@ -27,12 +27,14 @@ var server = http.createServer(function (req, res) {
 		var query = parseRequest.query;
 		var path = parseRequest.pathname;
 
+		// console.log
+		// console.log(routes["/api/parsetime"]);
 		
-		if (path == routes["/api/parsetime"]) {
-			console.log("A A A A A A A A");
+		if (path == "/api/parsetime") {
+			console.log(routes["/api/parsetime"]);
 		}
-		else if (path == routes["api/unixtime"]) {
-			console.log("U U U N N N I I I X X X");
+		else if (path == "/api/unixtime") {
+			console.log(routes["/api/unixtime"]);
 		}
 
 		res.writeHead(200, { 'Content-Type' : 'application/json' })
