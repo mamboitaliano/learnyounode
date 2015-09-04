@@ -4,16 +4,22 @@ var url = require('url');
 var date = new Date();
 
 var routes = {
-	'/api/parsetime': {
-		"hour": date.getHours().toISOString();
-		"minute": date.getMinutes().ISOString();
-		"second": date.getSeconds().ISOString();
-	}
 
-	'api/unixtime': {
-		"unixtime": date.getTime();
+	"/api/parsetime":
+	{
+		"hour": date.getHours(),
+		"minute": date.getMinutes(),
+		"second": date.getSeconds()
+	},
+
+	"/api/unixtime":
+	{
+		"unixtime": date.getTime()
 	}
 }
+
+// console.log(routes["/api/unixtime"]);
+
 
 var server = http.createServer(function (req, res) {
 	if (req.method === "GET") {
@@ -21,10 +27,14 @@ var server = http.createServer(function (req, res) {
 		var query = parseRequest.query;
 		var path = parseRequest.pathname;
 
-		// // test stuff
-		// console.log(parseRequest);
-		// console.log(query);
-		// console.log(path);
+		
+		if (path == routes["/api/parsetime"]) {
+			console.log("A A A A A A A A");
+		}
+		else if (path == routes["api/unixtime"]) {
+			console.log("U U U N N N I I I X X X");
+		}
+
 		res.writeHead(200, { 'Content-Type' : 'application/json' })
 		res.end();
 	}
@@ -35,4 +45,11 @@ var server = http.createServer(function (req, res) {
 });
 
 server.listen(port);
+
+		// // test stuff
+		// console.log(parseRequest);
+		// console.log(query);
+		// console.log(path);
+
+
 
