@@ -11,7 +11,7 @@ var server = net.createServer(function (socket) {
 		+ ('0' + myDate.getDate()).slice(-2) + " " 
 		+ myDate.getHours() + ":" 
 		+ myDate.getMinutes() + "\n";
-
+	
 	socket.write(myDateString);
 	socket.end();
 });
