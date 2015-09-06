@@ -14,7 +14,7 @@ var routes = {
 
 	"/api/unixtime":
 	{
-		"unixtime": date.getTime()
+		"unixtime": ''
 	}
 }
 
@@ -37,7 +37,6 @@ var server = http.createServer(function (req, res) {
 			routes["/api/unixtime"].unixtime = d.getTime();
 			time = routes["/api/unixtime"]
 		}
-
 		res.writeHead(200, { 'Content-Type' : 'application/json' })
 		res.end(JSON.stringify(time));
 	}
