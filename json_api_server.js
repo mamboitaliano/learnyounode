@@ -7,9 +7,9 @@ var routes = {
 
 	"/api/parsetime":
 	{
-		"hour": date.getHours(),
-		"minute": date.getMinutes(),
-		"second": date.getSeconds()
+		"hour": '',
+		"minute": '',
+		"second": ''
 	},
 
 	"/api/unixtime":
@@ -24,31 +24,28 @@ var server = http.createServer(function (req, res) {
 		var query = parseRequest.query;
 		var path = parseRequest.pathname;
 		var time = '';
+
+		d = new Date(parseRequest.query.iso);
 		
-		if (path == "/api/parsetime") {
+		if (path === "/api/parsetime") {
+			routes["/api/parsetime"].hour = d.getHours();
+			routes["/api/parsetime"].minute = d.getMinutes();
+			routes["/api/parsetime"].second = d.getSeconds();
 			time = routes["/api/parsetime"];
 		}
-		else if (path == "/api/unixtime") {
-			time = routes["/api/unixtime"];
+		else if (path === "/api/unixtime") {
+			routes["/api/unixtime"].unixtime = d.getTime();
+			time = routes["/api/unixtime"]
 		}
-
-		// console.log(time);
 
 		res.writeHead(200, { 'Content-Type' : 'application/json' })
 		res.end(JSON.stringify(time));
 	}
 	else {
+		res.writeHead(404);
 		console.log('no GET data received\n');
 		res.end();
 	}
 });
 
 server.listen(port);
-
-		// // test stuff
-		// console.log(parseRequest);
-		// console.log(query);
-		// console.log(path);
-
-
-
